@@ -1,0 +1,21 @@
+
+%__rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2
+%__cargo RUSTFLAGS="%{__rustflags}" %{_bindir}/cargo
+%__cargo_common_opts %{?_smp_mflags}
+
+%cargo_build() \
+%{shrink:\
+    %{__cargo} build \
+    %{__cargo_common_opts} \
+    --offline --release \
+    %* \
+}
+
+%cargo_test() \
+%{shrink:\
+    %{__cargo} test \
+    %{__cargo_common_opts} \
+    --offline \
+    --no-fail-fast \
+    %* \
+}
