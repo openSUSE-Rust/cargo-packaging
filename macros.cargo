@@ -1,4 +1,5 @@
 
+
 %__rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2
 %__cargo RUSTFLAGS="%{__rustflags}" %{_bindir}/cargo
 %__cargo_common_opts %{?_smp_mflags}
@@ -17,5 +18,16 @@
     %{__cargo_common_opts} \
     --offline \
     --no-fail-fast \
+    %* \
+}
+
+%cargo_install() \
+%{shrink:\
+    %{__cargo} install \
+    %{__cargo_common_opts} \
+    --offline \
+    --no-track \
+    --root=%{buildroot}%{_prefix} \
+    --path . \
     %* \
 }
