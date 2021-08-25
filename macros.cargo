@@ -1,5 +1,8 @@
 
-fedora: %if %{defined fedora} %global debug_package %{nil} %endif
+fedora:
+%if %{defined fedora}
+%global debug_package %{nil}
+%endif
 
 %__rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2
 %__cargo RUSTFLAGS="%{__rustflags}" %{_bindir}/cargo
