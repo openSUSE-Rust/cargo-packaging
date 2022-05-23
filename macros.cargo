@@ -1,5 +1,5 @@
 
-%__rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2
+%__rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2 -C incremental=false
 %__cargo CARGO_FEATURE_VENDORED=1 RUSTFLAGS="%{__rustflags}" %{_bindir}/cargo
 %__cargo_common_opts %{?_smp_mflags}
 
