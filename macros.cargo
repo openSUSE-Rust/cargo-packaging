@@ -36,3 +36,17 @@
     --path . \
     %* \
 }
+
+%cargo_install_lock() \
+%{shrink:\
+    unset LIBSSH2_SYS_USE_PKG_CONFIG && \
+    mkdir -p %{buildroot}/%{_datadir}/%{name}-%{version} && \
+    cp Cargo.lock %{buildroot}/%{_datadir}/%{name}-%{version}/Cargo.lock && \
+    %{__cargo} install \
+    %{__cargo_common_opts} \
+    --offline \
+    --no-track \
+    --root=%{buildroot}%{_prefix} \
+    --path . \
+    %* \
+}

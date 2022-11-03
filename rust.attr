@@ -1,0 +1,4 @@
+
+%__rust_provides    %{_rpmconfigdir}/rust-rpm-prov rpm-provides
+%__rust_path        ^.*/Cargo.lock$
+
