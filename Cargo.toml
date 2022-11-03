@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-cargo-lock = "8.0"
+auditable-info = { version = "0.6.2" }
 clap = { version = "3.2", features = ["derive", "env"] }
 # toml = "0.5"
 # serde_derive = "1.0"

@@ -1,4 +1,5 @@
 
-%__rust_provides    %{_rpmconfigdir}/rust-rpm-prov rpm-provides
-%__rust_path        ^.*/Cargo.lock$
+%__rust_provides     %{_rpmconfigdir}/rust-rpm-prov rpm-provides
+%__rust_magic        ^(setuid,? )?(setgid,? )?(sticky )?ELF (32|64)-bit.*$
+%__rust_exclude_path ^/usr/lib/debug/
 

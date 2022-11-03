@@ -9,7 +9,8 @@
 %cargo_build() \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    %{__cargo} build \
+    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    %{__cargo} $CARGO_AUDITABLE build \
     %{__cargo_common_opts} \
     --offline --release \
     %* \
@@ -18,7 +19,8 @@
 %cargo_test() \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    %{__cargo} test \
+    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    %{__cargo} $CARGO_AUDITABLE test \
     %{__cargo_common_opts} \
     --offline \
     --no-fail-fast \
@@ -28,7 +30,8 @@
 %cargo_install() \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    %{__cargo} install \
+    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    %{__cargo} $CARGO_AUDITABLE install \
     %{__cargo_common_opts} \
     --offline \
     --no-track \
@@ -37,16 +40,3 @@
     %* \
 }
 
-%cargo_install_lock() \
-%{shrink:\
-    unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    mkdir -p %{buildroot}/%{_datadir}/%{name}-%{version} && \
-    cp Cargo.lock %{buildroot}/%{_datadir}/%{name}-%{version}/Cargo.lock && \
-    %{__cargo} install \
-    %{__cargo_common_opts} \
-    --offline \
-    --no-track \
-    --root=%{buildroot}%{_prefix} \
-    --path . \
-    %* \
-}
