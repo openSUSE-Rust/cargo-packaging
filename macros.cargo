@@ -27,7 +27,7 @@
     %* \
 }
 
-%cargo_install() \
+%cargo_install(p:) \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
     if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
@@ -36,7 +36,6 @@
     --offline \
     --no-track \
     --root=%{buildroot}%{_prefix} \
-    --path . \
+    --path %{-p:%{-p*}}%{!-p:.} \
     %* \
 }
-
