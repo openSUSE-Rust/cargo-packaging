@@ -10,7 +10,7 @@
 %cargo_build() \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE build \
     %{__cargo_common_opts} \
     --offline --release \
@@ -20,7 +20,7 @@
 %cargo_test() \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE test \
     %{__cargo_common_opts} \
     --offline \
@@ -31,7 +31,7 @@
 %cargo_install(p:) \
 %{shrink:\
     unset LIBSSH2_SYS_USE_PKG_CONFIG && \
-    if [[ -z $RUSTC_WRAPPER ]]; then CARGO_AUDITABLE="auditable" ; fi && \
+    if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE install \
     %{__cargo_common_opts} \
     --offline \
