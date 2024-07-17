@@ -11,6 +11,12 @@ These are used in your .spec file to build, test and install your rust applicati
      %{cargo_test}
      %{cargo_install}
 
+### Custom RUSTFLAGS
+
+Custom RUSTFLAGS can be set with:
+
+    %define __rustflags --cfg tokio_unstable
+
 ### Tools
 
 These tools are used both manually and automatically in your build to help generate
