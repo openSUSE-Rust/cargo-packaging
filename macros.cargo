@@ -1,6 +1,6 @@
 
 
-%build_rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2 -C strip=none
+%build_rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2 -C codegen-units=1 -C strip=none
 %__cargo CARGO_INCREMENTAL=0 CARGO_FEATURE_VENDORED=1 RUSTFLAGS="%{?__rustflags} %{?build_rustflags}" %{_bindir}/cargo
 %__cargo_common_opts %{?_smp_mflags}
 
