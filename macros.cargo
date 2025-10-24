@@ -40,3 +40,9 @@
     --path %{-p:%{-p*}}%{!-p:.} \
     %* \
 }
+
+# Declarative buildsystem, requires RPM 4.20+ to work
+# https://rpm-software-management.github.io/rpm/manual/buildsystem.html
+%buildsystem_cargo_build() %cargo_build %*
+%buildsystem_cargo_check() %cargo_test %*
+%buildsystem_cargo_install() %cargo_install %*
