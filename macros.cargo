@@ -34,7 +34,7 @@
     if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE install \
     %{__cargo_common_opts} \
-    --offline --locked \
+    --offline --locked --release \
     --no-track \
     --root=%{buildroot}%{_prefix} \
     --path %{-p:%{-p*}}%{!-p:.} \
