@@ -2,10 +2,18 @@
 
 %build_rustflags -Clink-arg=-Wl,-z,relro,-z,now -C debuginfo=2 -C strip=none
 %__cargo CARGO_INCREMENTAL=0 CARGO_FEATURE_VENDORED=1 RUSTFLAGS="%{?__rustflags} %{?build_rustflags}" CARGO_TARGET_DIR=%{_builddir}/%{buildsubdir}/target/ %{_bindir}/cargo
+
+# This can be overriden by the user in some circumstances.
 %__cargo_common_opts %{?_smp_mflags}
+
+# Note that we don't use --locked here - this is because in some configurations
+# when we patch and then vendor, this causes the build to require the lockfile
+# to update from it's internal knowledge.
+%__cargo_build_opts --offline
 
 %rust_arches x86_64 i586 i686 armv6hl armv7hl aarch64 ppc64 powerpc64 ppc64le powerpc64le riscv64 s390x
 %rust_tier1_arches x86_64 aarch64
+
 
 %cargo_build() \
 %{shrink:\
@@ -13,7 +21,8 @@
     if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE build \
     %{__cargo_common_opts} \
-    --offline --locked --release \
+    %{__cargo_build_opts} \
+    --release \
     %* \
 }
 
@@ -23,7 +32,7 @@
     if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE test \
     %{__cargo_common_opts} \
-    --offline --locked \
+    %{__cargo_build_opts} \
     --no-fail-fast \
     %* \
 }
@@ -34,7 +43,8 @@
     if [ -z "$RUSTC_WRAPPER" ]; then CARGO_AUDITABLE="auditable" ; fi && \
     %{__cargo} $CARGO_AUDITABLE install \
     %{__cargo_common_opts} \
-    --offline --locked --release \
+    %{__cargo_build_opts} \
+    --release \
     --no-track \
     --root=%{buildroot}%{_prefix} \
     --path %{-p:%{-p*}}%{!-p:.} \
